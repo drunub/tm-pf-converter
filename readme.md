@@ -14,10 +14,14 @@ pls maybe don't upload skins converted with this to maniapark etc, especially no
 
 ## requirements
 - [gbx-py](https://github.com/schadocalex/gbx-py/tree/dev) (i included it to keep stuff simple)
-- probably python 3.11 (or whatever gbx-py requires)
-- tm2020 nadeoimporter (i think nadeoinporter usually comes in tm2020 path)
-- blender (i think i tested it with blender 4.x, some older versions probably work)
+- probably python 3.11 (or whatever gbx-py requires) [Python 3.14 needs compilation of lzo from source, which fails, 3.11 is recommended]
+- tm2020 nadeoimporter (Install through Blendermania or download from [here](https://nadeo-download.cdn.ubi.com/trackmania/NadeoImporter_2022_07_12.zip). Unpack next to the games Trackmania.exe)
+- blender (i think i tested it with blender 4.x, some older versions probably work. 5.0 and 5.1 don't work, download the portable release from [Here](https://download.blender.org/release/Blender4.5/))
 - gbx-py requirements: ``python-lzo PySide6 Pillow construct``
+
+### requirements on Linux
+- TM2020 installed from Steam
+- Protontricks (and specifically protontricks-launch)
 
 ## usage
 it only takes a tm2 skin zip file as an input

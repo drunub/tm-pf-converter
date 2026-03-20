@@ -13,12 +13,16 @@ import configparser
 
 def error(msg):
     print(msg)
-    input()
+    if sys.stdin.isatty():
+        input()
     exit(1)
 
 def config(file):
     conf = {}
     for l in open(file, "rt").readlines():
+        l = l.strip()
+        if not l or l.startswith("#") or l.startswith(";") or "=" not in l:
+            continue
         l = l.split("=", 1)
         k = l[0].strip(" \"'").lower()
         v = l[1].strip(" \"'\n")
@@ -32,6 +36,14 @@ def get_tm_user_dir(nadeoini):
     return re.sub("\{userdocs\}", re.escape(os.path.expanduser("~") + "\\Documents\\") , nadeo["Trackmania"]["UserDir"], flags=re.IGNORECASE)
 
 
+def find_case_insensitive_path(parent_dir, file_name):
+    target_name = file_name.casefold()
+    for entry in os.listdir(parent_dir):
+        if entry.casefold() == target_name:
+            return os.path.join(parent_dir, entry)
+    return None
+
+
 RENAME_FILES = {"SkinDiffuse.dds":    "Skin_D.dds",
                 "DiffuseDirty.dds":   "Skin_DirtMask.dds", # maybe naming error from some custom skin i found
                 "SkinDirty.dds":      "Skin_DirtMask.dds",
@@ -43,9 +55,9 @@ RENAME_FILES = {"SkinDiffuse.dds":    "Skin_D.dds",
 
 def rename_files(skin_dir):
     for k, v in RENAME_FILES.items():
-        path_from = os.path.join(skin_dir, k)
+        path_from = find_case_insensitive_path(skin_dir, k)
         path_to = os.path.join(skin_dir, v)
-        if os.path.isfile(path_from):
+        if path_from and os.path.isfile(path_from):
             print(f"Rename {path_from} -> {path_to}")
             shutil.move(path_from, path_to)
     print()
@@ -118,14 +130,14 @@ def extract_skin_meshes(skin_dir):
     obj_out = ""
     obj_verts = [0]
     
-    lod_files = [os.path.join(skin_dir, "MainBodyVeryHigh.solid.gbx"),
-                 os.path.join(skin_dir, "MainBodyHigh.solid.gbx"),
-                 os.path.join(skin_dir, "MainBody.solid.gbx")]
+    lod_files = [find_case_insensitive_path(skin_dir, "MainBodyVeryHigh.solid.gbx"),
+                 find_case_insensitive_path(skin_dir, "MainBodyHigh.solid.gbx"),
+                 find_case_insensitive_path(skin_dir, "MainBody.solid.gbx")]
     
     lod = 0
     
     for fn in lod_files:
-        if os.path.isfile(fn):
+        if fn and os.path.isfile(fn):
             print(f"\n\nExtracting {fn}...\n")
             lod += 1
             data = parse_file(fn)
@@ -160,6 +172,5 @@ def extract_skin_meshes(skin_dir):
     open(os.path.join(skin_dir, "temp.obj"),"wt").write(obj_out)
     open(os.path.join(skin_dir, "temp.py"), "wt").write(py_out)
     print("\n")
-
 
 

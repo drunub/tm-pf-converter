@@ -1,0 +1,4 @@
+python-lzo
+PySide6
+Pillow
+construct
