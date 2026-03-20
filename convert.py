@@ -65,21 +65,17 @@ def run_command(command, **kwargs):
 
 
 def pick_skin_zip():
-    qt_widgets = None
     try:
-        from PySide6 import QtWidgets
-        qt_widgets = QtWidgets
+        from tkinter import filedialog
     except ImportError:
-        error("Missing input skin zip and PySide6 is not installed for the file picker")
+        error("Missing input skin zip and Tkinter is not installed for the file picker")
         raise SystemExit(1)
-
-    app = qt_widgets.QApplication.instance() or qt_widgets.QApplication([])
-    file_path, _ = qt_widgets.QFileDialog.getOpenFileName(
-        None,
-        "Select a TM2 skin zip",
-        str(Path.cwd()),
-        "Zip files (*.zip);;All files (*)",
+    
+    file_path = filedialog.askopenfilename(
+        title="Select a ZIP file",
+        filetypes=[("ZIP files", "*.zip"), ("All files", "*.*")]
     )
+    
     if not file_path:
         error("No input skin zip selected")
     return Path(file_path)
