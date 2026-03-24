@@ -53,15 +53,19 @@ fakeshad doesn't work atm, but i will consider adding
 
 i might consider automating this part at some point
 
-at the moment, because the textures are only renamed, roughness only works on the skin texture and not details or wheels. this is because the _D texture suffix (which uses the same format as tmnf/tm2) only works on the skin material. for details and wheels, you will need to copy the alpha channel of Details/Wheels_B to the red channel of Details/Wheels_R. green channel is for metallic which i usually fill white. if you want to control the metallic of the skin texture, you can also follow the same method (and rename Skin_D to Skin_B)
+at the moment, because the textures are only renamed, roughness only works on the skin texture and not details or wheels. this is because the _D texture suffix (which uses the same format as tmnf/tm2) only works on the skin material. for details and wheels, you will need to copy the alpha channel of Details/Wheels_B to the red channel of a new texture Details/Wheels_R. green channel is for metallic which i usually fill white. if you want to control the metallic of the skin texture, you can also follow the same method (and rename Skin_D to Skin_B)
 
 also iirc, for some reason Skin_B doesn't work without Skin_R, but Wheels and Details are fine without.... so like:
 
 Skin_D 
+
 OR
+
 Skin_B and Skin_R
 
+
 Details_B and optionally Details_R
+
 Wheels_B and optionally Wheels_R
 
 more details here:
