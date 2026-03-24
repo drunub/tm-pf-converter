@@ -8,7 +8,7 @@ the mesh of the skin MUST have been made with tm2's nadeoimporter and not the tm
 
 i wrote most of this quite a while ago, i cant remember how some of it works, this is more a proof of concept at this point, this thing is mega jank, it WILL break, dont expect it to work with every tm2 skin, use at own risk
 
-i probably wont be continuing with this
+i probably wont be continuing much with this or maybe at all
 
 pls maybe don't upload skins converted with this to maniapark etc, especially not without permission from original author, it probably isn't a perfect conversion
 
@@ -26,10 +26,7 @@ pls maybe don't upload skins converted with this to maniapark etc, especially no
 ## usage
 it only takes a tm2 skin zip file as an input
 
-if the skin uses pack files, it WONT work (you need the .solid.mesh files), pack files can be extracted by equipping the skin and  looking inside the memory/temp folder in openplanet in tm2 (i cant remember specifics)
-
-it doesn't automatically remove unused textures,,, you probably want to delete damage or dirt textures if you need to save space
-
+if the skin uses pack files, it WONT work (you need the .solid.mesh files), pack files can be extracted by equipping the skin and looking inside the memory/temp folder in tm2 openplanet, i created a tutorial: https://www.youtube.com/watch?v=ZFK3acudNMA
 
 edit the ``paths.ini`` file (an example is included):
 - ``BLENDER`` - blender executable path
@@ -44,7 +41,31 @@ example:
 
 ``convert.bat tm2skin.zip``
 
-
 alternatively, just drag the skin zip file onto convert.bat
 
 if you are lucky, you will have a new zip file in the ``out`` folder, which you can copy straight to skins/models/carsport
+
+it doesn't automatically remove unused textures,,, you probably want to delete damage or dirt textures if you need to save space
+
+fakeshad doesn't work atm, but i will consider adding
+
+**optional texture stuff**
+
+i might consider automating this part at some point
+
+at the moment, because the textures are only renamed, roughness only works on the skin texture and not details or wheels. this is because the _D texture suffix (which uses the same format as tmnf/tm2) only works on the skin material. for details and wheels, you will need to copy the alpha channel of Details/Wheels_B to the red channel of Details/Wheels_R. green channel is for metallic which i usually fill white. if you want to control the metallic of the skin texture, you can also follow the same method (and rename Skin_D to Skin_B)
+
+also iirc, for some reason Skin_B doesn't work without Skin_R, but Wheels and Details are fine without.... so like:
+
+Skin_D 
+OR
+Skin_B and Skin_R
+
+Details_B and optionally Details_R
+Wheels_B and optionally Wheels_R
+
+more details here:
+tm2 texture format: https://doc.maniaplanet.com/customization/importer/import-a-car-skin (under 'Texture sheets' section)
+tm2020 texture format: https://wiki.trackmania.io/en/content-creation/texture-mods
+
+i'm sure there's some other textures i've missed, maybe normals, but maybe they can also simply be renamed
